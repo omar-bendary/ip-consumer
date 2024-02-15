@@ -217,7 +217,7 @@ The backend server offers the following endpoints:
 
 Endpoint
 
-* **POST /ip-consumer**
+* **POST api//ip-consumer**
 
 Request Format
 
@@ -229,13 +229,13 @@ Request Format
 
 Description
 
-* Send a POST request to the `/ip-consumer` endpoint with a JSON payload containing a list of IP addresses.
+* Send a POST request to the `/api/ip-consumer` endpoint with a JSON payload containing a list of IP addresses.
 * The server validates each IP address, adds it to the database if valid, and triggers an asynchronous task to update its information.
 
 #### Example Request (cURL)
 
 ```bash
-curl -X POST http://your-backend-server/ip-consumer
+curl -X POST http://127.0.0.1:8000/api/ip-consumer
     -H "Content-Type: application/json"
     -d '{"ip_addresses": ["192.168.0.1", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"]}'
 ```
@@ -256,7 +256,7 @@ WebSocket Endpoint
 #### Example JavaScript Connection
 
 ```javascript
-const socket = new WebSocket('ws://your-backend-server/ws/ip_details/');
+const socket = new WebSocket('ws://127.0.0.1:8000/ws/ip_details/');
 
 socket.onopen = function(event) {
   console.log('WebSocket connection established.');
