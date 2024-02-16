@@ -22,6 +22,7 @@ services:
     depends_on:
       - db
     env_file: .env
+    restart: on-failure
 
   redis:
     image: redis
@@ -30,6 +31,7 @@ services:
     restart: always
     volumes:
       - redisdata:/data
+    restart: always
 
   celery_worker:
     build: .
