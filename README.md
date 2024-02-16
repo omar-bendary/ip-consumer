@@ -28,7 +28,6 @@ git clone https://github.com/omar-bendary/ip-consumer.git
 Create a **`.env`** file in the root directory of the project with the following environment variables:
 
 ```
-plaintextCopy code
 # ----------PostgreSQL------------------
 POSTGRES_HOST=db
 POSTGRES_PORT=5432
