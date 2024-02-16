@@ -12,6 +12,27 @@ make a new folder for the project and open this folder in the Terminal/Windows (
 git clone https://github.com/omar-bendary/ip-consumer.git
 ```
 
+# Create your .evn file
+
+```plaintext
+# ----------PostgreSQL------------------
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+POSTGRES_DB=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+
+
+#________Redis___________
+REDIS_HOST=redis
+REDIS_PORT=6379
+
+
+#---IP Info Api -----------
+API_TOKEN= your api token
+```
+
+
 # Pre-requisites and Local Development
 
 # Using Docker and Docker compose
@@ -239,8 +260,6 @@ curl -X POST http://127.0.0.1:8000/api/ip-consumer
     -H "Content-Type: application/json"
     -d '{"ip_addresses": ["192.168.0.1", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"]}'
 ```
-
-
 
 ### 2. Real-time IP Details Updates
 
