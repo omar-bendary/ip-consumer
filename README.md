@@ -30,7 +30,7 @@ git clone https://github.com/omar-bendary/ip-consumer.git
 Create a **`.env`** file in the root directory of the project with the following environment variables:
 
 ```
-plaintextCopy code
+
 # ----------PostgreSQL------------------
 POSTGRES_HOST=db
 POSTGRES_PORT=5432
@@ -45,7 +45,6 @@ REDIS_PORT=6379
 #---IP Info Api -----------
 API_TOKEN=your_api_token
 
-Save to grepper
 
 ```
 
@@ -137,7 +136,7 @@ pip install -r requirements.txt
 
 ### Set up your RDBMS
 
-Configure your database settings in **`[settings.py](http://settings.py)` as before**.
+Configure your database settings in **`settings.py` as before**.
 
 ### Run the Development Server
 
