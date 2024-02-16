@@ -19,7 +19,8 @@ class IPAddressSerializer(serializers.Serializer):
                 ip_object, created = IPAddress.objects.get_or_create(
                     ip_address=ip_address
                 )
-                update_ip_info.delay(ip_object.ip_address)
+                if not created:
+                    update_ip_info.delay(ip_object.ip_address)
 
             except ValueError:
                 raise serializers.ValidationError(
