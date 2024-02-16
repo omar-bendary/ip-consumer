@@ -1,7 +1,5 @@
 # IP Consumer API
 
-# IP Consumer API
-
 This Django project provides endpoints for consuming IP addresses, validating them, and updating their information asynchronously. Additionally, it implements WebSocket functionality for real-time updates of IP information. By following the structure and components outlined in this documentation, clients can effectively understand and use the functionality of the project.
 
 ---
