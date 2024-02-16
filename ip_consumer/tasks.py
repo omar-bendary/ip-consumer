@@ -2,6 +2,7 @@ import requests
 from asgiref.sync import async_to_sync
 from celery import shared_task
 from channels.layers import get_channel_layer
+from decouple import config
 
 
 @shared_task
@@ -17,7 +18,7 @@ def send_ip_info_to_group(ip_info):
 
 @shared_task
 def fetch_ip_info(ip_address):
-    api_token = "5e0e869feb087d"  # TODO: Get this from an environment variable.
+    api_token = config("API_TOKEN", cast=str)
     url = f"https://ipinfo.io/{ip_address}?token={api_token}"
 
     response = requests.get(url)
