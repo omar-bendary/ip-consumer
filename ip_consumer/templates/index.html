@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP and WebSocket Consumer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IP and WebSocket Consumer</h1>
+        <textarea id="ipInput" placeholder="Enter list of IPs separated by commas"></textarea>
+        <button onclick="fetchIPData()">Fetch IP Data</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const socket = new WebSocket('ws://127.0.0.1:8000/ws/ip_details/');
+
+        socket.onopen = function(event) {
+            console.log('WebSocket connection established.');
+        };
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            console.log(data)
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `<p><strong>${data?.ip_info?.ip}</strong>: ${JSON.stringify(data?.ip_info)}</p>` + outputDiv.innerHTML;
+        };
+
+        socket.onclose = function(event) {
+            console.log('WebSocket connection closed.');
+        };
+
+        socket.onerror = function(error) {
+            console.error('WebSocket error:', error);
+        };
+
+        // Function to get CSRF token from cookies
+        function getCSRFToken() {
+            const csrfCookie = document.cookie.split('; ').find(cookie => cookie.startsWith('csrftoken='));
+            if (csrfCookie) {
+                return csrfCookie.split('=')[1];
+            }
+            return '';
+        }
+
+
+        function fetchIPData() {
+            const ipInput = document.getElementById('ipInput').value.trim();
+            const ips = ipInput.split(',').map(ip => ip.trim());
+
+            fetch('http://127.0.0.1:8000/api/ip-consumer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken() 
+                },
+                body: JSON.stringify({ ip_addresses: ips })
+            })
+            .then(async response => {
+                if(response.ok){
+                    return response.json()
+                } else if(response.status === 400) {
+                    const data = await response.json();
+                    const outputDiv = document.getElementById('output');
+                    outputDiv.innerHTML = `<p style="color:red;font-weight:900;">${data.ip_addresses[0]}</p>` + outputDiv.innerHTML;
+                } else {
+                    throw new Error("Something went wrong!")
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const outputDiv = document.getElementById('output');
+                outputDiv.innerHTML += '<p>Error fetching IP data. Please try again later.</p>';
+            });
+        }
+    </script>
+</body>
+</html>

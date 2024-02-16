@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Local
     "ip_consumer",
+    "index",
     # 3rd Party
     "rest_framework",
     "channels",
