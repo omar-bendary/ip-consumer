@@ -10,3 +10,4 @@ aiohttp==3.9.3
 django-lifecycle==1.1.2
 python-decouple==3.6
 psycopg2-binary==2.9.3
+django-cors-headers==3.10.0
