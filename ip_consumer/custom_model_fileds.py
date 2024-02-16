@@ -8,7 +8,7 @@ class IPAddressField(models.CharField):
     description = "Field for storing IP addresses"
 
     def __init__(self, *args, **kwargs):
-        kwargs["max_length"] = 15
+        kwargs["max_length"] = 50
         kwargs["unique"] = True
         super().__init__(*args, **kwargs)
 

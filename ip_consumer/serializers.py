@@ -13,6 +13,7 @@ class IPAddressSerializer(serializers.Serializer):
         """
         Check if each IP address in the list is a valid IPv4 or IPv6 address.
         """
+        invalid_ips = []
         for ip_address in value:
             try:
                 ipaddress.ip_address(ip_address)
@@ -21,9 +22,12 @@ class IPAddressSerializer(serializers.Serializer):
                 )
                 if not created:
                     update_ip_info.delay(ip_object.ip_address)
-
             except ValueError:
-                raise serializers.ValidationError(
-                    f"{ip_address} is not a valid IP address."
-                )
+                invalid_ips.append(ip_address)
+
+        if invalid_ips:
+            raise serializers.ValidationError(
+                f"The following IP address(es) are not valid: {', '.join(invalid_ips)}"
+            )
+
         return value
