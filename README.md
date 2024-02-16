@@ -43,7 +43,6 @@ REDIS_PORT=6379
 #---IP Info Api -----------
 API_TOKEN=your_api_token
 
-Save to grepper
 
 ```
 
